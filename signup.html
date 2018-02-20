@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login page</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<style>
+
+
+
+
+
+.flex{
+height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+}
+
+#email{
+  margin-bottom: 1rem;
+}
+#password{
+    margin-bottom: 1rem;
+}
+
+
+
+</style>
+  </head>
+  <body>
+
+
+
+
+
+<div class="flex">
+      <h1> Create an account </h1>
+<div class="col-lg-3">
+    <form class ="form-group">
+
+     <label class ="control-label" for ="name">Name</label>
+
+     <input type="email" class="form-control" id="email" placeholder="Enter email">
+     <label class="control-label" for ="pwd">Password</label>
+
+     <input class="form-control " type ="password" id="password" placeholder="Enter password">
+
+     <button class="btn btn-primary btn-block" type="submit" id="account">Create an account</button>
+
+
+<span class ="login">Back to, <a href="/" id ="index">Log in Page</a></span>
+
+    </form>
+
+</div>
+<div class="col-lg-3">
+
+
+</div>
+
+    </div>
+
+<script>
+
+
+ 
+var config = {
+   apiKey: "AIzaSyDMP_eY7gzyhID57TwHQXBAhZSTSEXF38Y",
+   authDomain: "project-b69b1.firebaseapp.com",
+   databaseURL: "https://project-b69b1.firebaseio.com",
+   projectId: "project-b69b1",
+   storageBucket: "",
+   messagingSenderId: "340912358863"
+ };
+ firebase.initializeApp(config);
+
+
+const auth = firebase.auth();
+
+
+account.addEventListener('click', e =>{
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+e.preventDefault();
+
+const promise = auth.createUserWithEmailAndPassword(email,password);
+promise.catch(console.log(e.message));
+
+
+});
+
+
+</script>
+  </body>
+</html>

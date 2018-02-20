@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login page</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
+<style>
+
+
+
+
+.flex{
+height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+}
+
+
+#email{
+  margin-bottom: 1rem;
+}
+#password{
+    margin-bottom: 1rem;
+}
+
+
+
+</style>
+  </head>
+  <body>
+
+
+
+
+
+<div class="flex">
+      <h1> Welcome to the Login page </h1>
+<div class="col-lg-3">
+    <form class ="form-group">
+
+     <label class ="control-label" for ="name">Name</label>
+
+     <input type="email" class="form-control" id="email" placeholder="Enter email">
+     <label class="control-label" for ="pwd">Password</label>
+
+     <input class="form-control " type ="password" id="password" placeholder="Enter password">
+
+     <button class="btn btn-primary btn-block show" type="submit" id="login" >Log in</button>
+
+     <button class="btn btn-primary btn-block hide" type="submit" id="logout" >Log out</button>
+
+
+    </form>
+
+</div>
+<div class="col-lg-3">
+<button class="btn btn-primary btn-block " type="submit" id ="facebook" > Login with facebook</button>
+<button class="btn btn-primary btn-block " type="submit" id ="google" > Login with google</button>
+
+</div>
+<span class ="signup">Don't have an account, <a href="signup.html" id ="signup">Sign up here</a></span>
+    </div>
+
+    <script>
+
+
+
+        var config = {
+           apiKey: "AIzaSyDMP_eY7gzyhID57TwHQXBAhZSTSEXF38Y",
+           authDomain: "project-b69b1.firebaseapp.com",
+           databaseURL: "https://project-b69b1.firebaseio.com",
+           projectId: "project-b69b1",
+           storageBucket: "",
+           messagingSenderId: "340912358863"
+         };
+        
+        
+        
+         firebase.initializeApp(config);
+        const auth = firebase.auth();
+        
+        
+        var login = document.getElementById('login');
+        var logout = document.getElementById('logout');
+        var facebook = document.getElementById('facebook');
+        var gmail = document.getElementById('google');
+        
+        document.addEventListener('DOMContentLoaded' , startup);
+        function startup(){
+        
+        
+          logout.addEventListener('click', signout);
+          facebook.addEventListener('click', facebooksignin);
+          gmail.addEventListener('click', gmailsignin);
+        }
+
+
+      login.addEventListener('click', e => {
+        
+        
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+        
+        e.preventDefault();
+        
+        
+        const promise = auth.signInWithEmailAndPassword(email,password);
+        
+        promise.catch(e => console.log(e.message));
+        
+        firebase.auth().onAuthStateChanged(firebaseuser =>{
+        
+          if(firebaseuser) {
+          // login.style.display ="none";
+        logout.classList.remove('hide');
+        console.log(firebaseuser);
+        
+        
+          }
+          else {
+        
+            logout.classList.add('hide');
+        console.log("user not logged in");
+          }
+        })
+        
+        
+        });
+        
+        
+        // logout
+        
+        
+       function signout(){
+          firebase.auth().signOut();
+        }
+        
+        
+        
+        
+        
+        
+        // facebook Login
+        
+        
+        
+        
+       function facebooksignin() {
+        console.log('hhh');      
+        var provider = new firebase.auth.FacebookAuthProvider();
+        
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          
+          var token = result.credential.accessToken;
+          
+          var user = result.user;
+        
+          console.log(token);
+          console.log(user);
+        
+        
+        
+        
+        }).catch(function(error) {
+          
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          
+          var email = error.email;
+          
+          var credential = error.credential;
+          
+        });
+        
+        }
+        
+        
+        // google sign in
+        
+        
+        
+        function gmailsignin(){
+          console.log('he');
+        var provider = new firebase.auth.GoogleAuthProvider();
+        
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          
+          var token = result.credential.accessToken;
+         
+          var user = result.user;
+         
+        }).catch(function(error) {
+        
+          var errorCode = error.code;
+          var errorMessage = error.message;
+        
+          var email = error.email;
+          
+          var credential = error.credential;
+         
+        });
+        }
+        
+        
+        
+        </script>
+
+  </body>
+</html>
